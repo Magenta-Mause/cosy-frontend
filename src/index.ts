@@ -1,32 +1,30 @@
 import { serve } from "bun";
 import index from "./index.html";
 
+const API_TARGET = process.env.API_TARGET ?? "http://127.0.0.1:8080";
+
 const server = serve({
   routes: {
     // Serve index.html for all unmatched routes.
     "/*": index,
 
-    "/api/hello": {
-      async GET(req) {
-        return Response.json({
-          message: "Hello, world!",
-          method: "GET",
-        });
-      },
-      async PUT(req) {
-        return Response.json({
-          message: "Hello, world!",
-          method: "PUT",
-        });
-      },
-    },
+    // proxy api requests to API_TARGET
+    "/api/*": async (req) => {
+      const url = new URL(req.url);
+      const target = API_TARGET + url.pathname + url.search;
 
-    "/api/hello/:name": async req => {
-      const name = req.params.name;
-      return Response.json({
-        message: `Hello, ${name}!`,
+      const backendRes = await fetch(target, {
+        method: req.method,
+        headers: req.headers,
+        body: req.method === "GET" || req.method === "HEAD" ? undefined : req.body,
+        redirect: "manual",
       });
-    },
+
+      return new Response(backendRes.body, {
+        status: backendRes.status,
+        headers: backendRes.headers,
+      });
+    }
   },
 
   development: process.env.NODE_ENV !== "production" && {
@@ -39,3 +37,4 @@ const server = serve({
 });
 
 console.log(`🚀 Server running at ${server.url}`);
+console.log(`🔀 Proxying API requests to ${API_TARGET}`);
