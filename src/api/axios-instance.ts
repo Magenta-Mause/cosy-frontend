@@ -1,7 +1,5 @@
-import axios, { AxiosRequestConfig } from 'axios';
+import axios, {type AxiosRequestConfig} from 'axios';
 
-// 1. Define the shape of your Backend Wrapper
-// (This matches your Java ApiResponse.java builder)
 export interface ApiResponse<T> {
   success: boolean;
   data: T;
@@ -11,16 +9,14 @@ export interface ApiResponse<T> {
 }
 
 export const AXIOS_INSTANCE = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || '', // Your API Base URL
+  baseURL: '/api'
 });
 
-// 2. Add an interceptor to unwrap the response
 AXIOS_INSTANCE.interceptors.response.use(
   (response) => {
-    // Check if the response matches your wrapper structure
-    // If 'data' and 'success' exist, return the inner 'data'
     if (response.data && response.data.data !== undefined && 'success' in response.data) {
-      return response.data.data;
+      const apiResponse: ApiResponse<unknown> = response.data;
+      return apiResponse.data;
     }
 
     return response.data;
@@ -31,7 +27,7 @@ AXIOS_INSTANCE.interceptors.response.use(
   }
 );
 
-// 3. Define the custom mutator function for Orval
+
 export const customInstance = <T>(
   config: AxiosRequestConfig,
   options?: AxiosRequestConfig,
@@ -41,9 +37,9 @@ export const customInstance = <T>(
     ...config,
     ...options,
     cancelToken: source.token,
-  }).then(({ data }) => data);
+  }).then((response) => response as T);
 
-  // @ts-ignore
+  // @ts-expect-error
   promise.cancel = () => {
     source.cancel('Query was cancelled');
   };
