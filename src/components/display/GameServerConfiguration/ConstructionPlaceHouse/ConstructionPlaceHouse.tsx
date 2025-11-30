@@ -1,9 +1,12 @@
 import GameSign from "@components/display/GameServerConfiguration/GameSign/GameSign.tsx";
 import type { CSSProperties } from "react";
+import { useTranslation } from "react-i18next";
 import constructionImage from "@/assets/ai-generated/main-page/construction.png";
 import { cn } from "@/lib/utils.ts";
 
 const ConstructionPlaceHouse = (props: { className?: string; style?: CSSProperties }) => {
+  const { t } = useTranslation();
+
   return (
     <a
       className={cn(
@@ -19,7 +22,9 @@ const ConstructionPlaceHouse = (props: { className?: string; style?: CSSProperti
         aria-label={`Create a new Game Server Configuration`}
         src={constructionImage}
       />
-      <GameSign className="bottom-[5%] right-[22%] w-[15%]">New Game Server</GameSign>
+      <GameSign className="bottom-[5%] right-[22%] w-[15%]">
+        {t("overviewPage.createNewServer")}
+      </GameSign>
     </a>
   );
 };

@@ -9,7 +9,7 @@ const RootLayout = () => {
 
   return (
     <React.Fragment>
-      <ButtonGroup className="absolute">
+      <ButtonGroup className="absolute z-100">
         <Button
           variant={"link"}
           onClick={() => {
@@ -27,8 +27,8 @@ const RootLayout = () => {
           Deutsch
         </Button>
       </ButtonGroup>
-      {/* Configure application shell here  */}
       <Outlet />
+      {/* Configure application shell here  */}
     </React.Fragment>
   );
 };

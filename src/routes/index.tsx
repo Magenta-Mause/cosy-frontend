@@ -1,21 +1,18 @@
-import {createFileRoute} from "@tanstack/react-router";
-import GameServerConfigurationsDisplay
-    from "@components/display/GameServerConfiguration/GameServerConfigurationsDisplay/GameServerConfigurationsDisplay.tsx";
-import {useTypedSelector} from "@/stores/rootReducer.ts";
-import bgImage from "@/assets/ai-generated/main-page/background.png"
+import GameServerConfigurationsDisplay from "@components/display/GameServerConfiguration/GameServerConfigurationsDisplay/GameServerConfigurationsDisplay.tsx";
+import { createFileRoute } from "@tanstack/react-router";
+import bgImage from "@/assets/ai-generated/main-page/background.png";
+import { useTypedSelector } from "@/stores/rootReducer.ts";
 
 export const Route = createFileRoute("/")({
-    component: Index,
+  component: Index,
 });
 
 function Index() {
-    const gameServers = useTypedSelector(
-        state => state.gameServerConfigurationSliceReducer.data
-    );
+  const gameServers = useTypedSelector((state) => state.gameServerConfigurationSliceReducer.data);
 
-    return (
-        <div
-            className="
+  return (
+    <div
+      className="
                   h-screen
                   w-screen
                   flex
@@ -23,16 +20,15 @@ function Index() {
                   justify-center
                   items-center
             "
-
-            style={{
-                backgroundImage: bgImage ? `url(${bgImage})` : undefined,
-                backgroundSize: '100% auto',
-                backgroundPosition: 'center toppm run dev',
-            }}
-        >
-            <GameServerConfigurationsDisplay gameServerConfigurations={gameServers}/>
-        </div>
-    );
+      style={{
+        backgroundImage: bgImage ? `url(${bgImage})` : undefined,
+        backgroundSize: "100% auto",
+        backgroundPosition: "center top",
+      }}
+    >
+      <GameServerConfigurationsDisplay gameServerConfigurations={gameServers} />
+    </div>
+  );
 }
 
 export default Index;
