@@ -1,18 +1,19 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   getGetAllGameServersQueryKey,
   useDeleteGameServerById,
 } from "@/api/generated/backend-api.ts";
-import type { GameServerConfigurationEntity } from "@/api/generated/model";
 import { gameServerConfigurationSliceActions } from "@/stores/slices/gameServerConfigurationSlice.ts";
 import { useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
+import type { RootState } from "@/stores";
 
 const useBackendFunctionality = () => {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
   const { t } = useTranslation();
+  const gameServers = useSelector((state: RootState) => state.gameServerConfigurationSliceReducer.data);
   const { mutate } = useDeleteGameServerById({
     mutation: {
       onMutate: async (variables) => {
@@ -23,9 +24,7 @@ const useBackendFunctionality = () => {
         });
 
         // Snapshot the previous value
-        const previousGameServers = queryClient.getQueryData<GameServerConfigurationEntity[]>(
-          getGetAllGameServersQueryKey(),
-        );
+        const previousGameServers = gameServers;
 
         // Optimistically update to the new value
         dispatch(gameServerConfigurationSliceActions.removeGameServerConfiguration(deletedUuid));
