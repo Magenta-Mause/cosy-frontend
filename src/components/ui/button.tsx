@@ -22,7 +22,7 @@ const buttonVariants = cva(
         // --- STARDEW VARIANT (Fully Scalable VW) ---
         stardew: [
           // Typography: Uses your custom font family + fallback
-          "font-['VT323'] text-[#5c1b0c] uppercase text-xl drop-shadow-[0_2px_0_rgba(255,255,255,0.4)]",
+          "font-['VT323'] text-[#5c1b0c] uppercase text-xl",
 
           // Base & Texture: The wood grain dots now scale with screen width
           "bg-[#d98c39] bg-[image:linear-gradient(to_right,transparent_50%,rgba(92,27,12,0.1)_50%),linear-gradient(to_bottom,transparent_50%,rgba(92,27,12,0.1)_50%)] bg-[length:0.25vw_0.25vw]",
