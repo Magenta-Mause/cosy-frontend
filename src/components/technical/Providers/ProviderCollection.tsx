@@ -16,7 +16,7 @@ const ProviderCollection = (props: { children: ReactNode }) => {
       <QueryClientProvider client={client}>
         <AuthProvider>
           {props.children}
-          <Toaster />
+          <Toaster toastOptions={{ duration: 2000 }} />
         </AuthProvider>
       </QueryClientProvider>
     </Provider>

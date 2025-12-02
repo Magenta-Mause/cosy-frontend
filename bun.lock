@@ -5,7 +5,6 @@
     "": {
       "name": "bun-react-template",
       "dependencies": {
-        "@cursorify/react": "^0.0.43",
         "@radix-ui/react-context-menu": "^2.2.16",
         "@radix-ui/react-label": "^2.1.7",
         "@radix-ui/react-popover": "^1.1.15",
@@ -132,8 +131,6 @@
     "@biomejs/cli-win32-x64": ["@biomejs/cli-win32-x64@2.3.8", "", { "os": "win32", "cpu": "x64" }, "sha512-RguzimPoZWtBapfKhKjcWXBVI91tiSprqdBYu7tWhgN8pKRZhw24rFeNZTNf6UiBfjCYCi9eFQs/JzJZIhuK4w=="],
 
     "@commander-js/extra-typings": ["@commander-js/extra-typings@14.0.0", "", { "peerDependencies": { "commander": "~14.0.0" } }, ""],
-
-    "@cursorify/react": ["@cursorify/react@0.0.43", "", {}, "sha512-P2OuDP0OMHBcdUu4fyI3+Ps5JU4N50lAA7ixOndD23w8o0t6kj2gnutoazZqG/0p0B8C2sDlg012O64ubw5AJA=="],
 
     "@esbuild/darwin-arm64": ["@esbuild/darwin-arm64@0.25.12", "", { "os": "darwin", "cpu": "arm64" }, ""],
 

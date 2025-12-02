@@ -13,7 +13,6 @@
     "lint:fix": "biome lint --write"
   },
   "dependencies": {
-    "@cursorify/react": "^0.0.43",
     "@radix-ui/react-context-menu": "^2.2.16",
     "@radix-ui/react-label": "^2.1.7",
     "@radix-ui/react-popover": "^1.1.15",
