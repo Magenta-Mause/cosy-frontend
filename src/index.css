@@ -8,7 +8,8 @@
   font-style: normal;
 }
 
-html {
+html,
+label {
   cursor:
     url("./assets/ai-generated/cursor/cursor-default.png") 0 0,
     auto;
@@ -26,7 +27,6 @@ body {
 
 button,
 a,
-label,
 [role="button"],
 input[type="submit"],
 input[type="reset"],

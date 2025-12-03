@@ -2,16 +2,16 @@ import { Label } from "@radix-ui/react-label";
 import type { KeyboardEvent } from "react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import {
-  AlertDialog,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
 import { buttonVariants } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
@@ -66,11 +66,11 @@ export function DeleteGameServerAlertDialog({
   };
 
   return (
-    <AlertDialog open={open} onOpenChange={handleOpenChange}>
-      <AlertDialogContent className={"font-mono"}>
-        <AlertDialogHeader>
-          <AlertDialogTitle>{t("deleteGameServerDialog.title", { serverName })}</AlertDialogTitle>
-          <AlertDialogDescription>{t("deleteGameServerDialog.description")}</AlertDialogDescription>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
+      <DialogContent className={"font-mono"}>
+        <DialogHeader>
+          <DialogTitle>{t("deleteGameServerDialog.title", { serverName })}</DialogTitle>
+          <DialogDescription>{t("deleteGameServerDialog.description")}</DialogDescription>
           <div className="grid gap-4 py-4">
             <div className="flex flex-col items-start gap-4">
               <Label htmlFor="serverName">{t("deleteGameServerDialog.inputLabel")}</Label>
@@ -84,11 +84,13 @@ export function DeleteGameServerAlertDialog({
               />
             </div>
           </div>
-        </AlertDialogHeader>
-        <AlertDialogFooter className={"flex gap-8 justify-end items-center"}>
-          <AlertDialogCancel className={"h-[50px]"} disabled={loading}>
-            {t("deleteGameServerDialog.cancel")}
-          </AlertDialogCancel>
+        </DialogHeader>
+        <DialogFooter className={"flex gap-8 justify-end items-center"}>
+          <DialogClose asChild>
+            <button type={"button"} className={cn(buttonVariants(), "h-[50px]")} disabled={loading}>
+              {t("deleteGameServerDialog.cancel")}
+            </button>
+          </DialogClose>
           <button
             type="button"
             onClick={handleConfirm}
@@ -97,8 +99,8 @@ export function DeleteGameServerAlertDialog({
           >
             {t("deleteGameServerDialog.confirm")}
           </button>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }
