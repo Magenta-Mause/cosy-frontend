@@ -1,6 +1,5 @@
-import CustomCursor from "@components/display/CustomCursor/CustomCursor.tsx";
 import AuthProvider from "@components/technical/Providers/AuthProvider/AuthProvider.tsx";
-import { CursorifyProvider } from "@cursorify/react";
+import { Toaster } from "@components/ui/sonner.tsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { ReactNode } from "react";
 import { Provider } from "react-redux";
@@ -13,7 +12,8 @@ const ProviderCollection = (props: { children: ReactNode }) => {
     <Provider store={stores}>
       <QueryClientProvider client={client}>
         <AuthProvider>
-          <CursorifyProvider cursor={<CustomCursor />}>{props.children}</CursorifyProvider>
+          {props.children}
+          <Toaster toastOptions={{ duration: 2000, className: "font-['VT323']" }} />
         </AuthProvider>
       </QueryClientProvider>
     </Provider>
