@@ -1,4 +1,4 @@
-import axios, { type AxiosRequestConfig } from "axios";
+import axios, {type AxiosRequestConfig} from "axios";
 
 export interface ApiResponse<T> {
   success: boolean;
@@ -7,6 +7,10 @@ export interface ApiResponse<T> {
   path?: string;
   statusCode?: number;
 }
+
+const AUTH_TOKEN = `
+eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJjb3N5LWJhY2tlbmQiLCJ0b2tlblR5cGUiOiJJREVOVElUWV9UT0tFTiIsInJvbGUiOiJPV05FUiIsInVzZXJuYW1lIjoiYWRtaW4iLCJzdWIiOiJmZWYxMDlhZi1mNmMzLTRhNDMtOTk1NC1kZDhjNDAxNzg5MjgiLCJpYXQiOjE3NjQ5NzYyNjAsImV4cCI6MTc2NDk3OTg2MH0.DhAwZJU54vvy1qeUIRYQUy4VOM35OshWIIDSR3vKQmPynUH-DcKK1DPxfxL5yXc_
+`.replace("\n", "");
 
 export const AXIOS_INSTANCE = axios.create({
   baseURL: "/api",
@@ -37,6 +41,7 @@ export const customInstance = <T>(
     ...options,
     cancelToken: source.token,
     timeout: options?.timeout ?? 4000,
+    headers: {"Authorization": `Bearer ${AUTH_TOKEN}`}
   }).then((response) => response as T);
 
   // @ts-expect-error

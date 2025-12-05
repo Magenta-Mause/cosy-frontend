@@ -6,7 +6,9 @@
  * OpenAPI spec version: v1.0
  */
 
-export interface PortMapping {
-  instance_port?: number;
-  container_port?: number;
+export interface UserInviteDto {
+  uuid?: string;
+  username?: string;
+  invited_by?: string;
+  secret_key?: string;
 }
