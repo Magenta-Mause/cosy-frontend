@@ -38,6 +38,7 @@ const translation: i18nLanguage = {
     question: "Du bist nicht angemeldet",
     continueMeansAccept: "Durch die Anmeldung akzeptieren Sie unsere",
     legal: "Datenschutzerklärung",
+    incorrectCredentials: "Falscher Benutzername oder Passwort.",
   },
 };
 

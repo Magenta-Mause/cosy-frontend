@@ -3,15 +3,13 @@ import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { getLoginMutationOptions, login } from "@/api/generated/backend-api";
-import type { LoginDto } from "@/api/generated/model";
+import { getLoginMutationOptions } from "@/api/generated/backend-api";
 import LoginBanner from "../LoginBanner/LoginBanner";
 import LoginForm from "../LoginDialog/LoginForm";
 
 const LoginDisplay = () => {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
-  const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const loginMutation = useMutation({
@@ -19,15 +17,10 @@ const LoginDisplay = () => {
     onSuccess: (token) => {
       localStorage.setItem("authToken", token);
       setOpen(false);
+      setError(null);
     },
-    onError: (error) => {
-      if (axios.isAxiosError(error)) {
-        const errorMessage =
-          error.response?.data?.message || error.message || t("signIn.loginFailed");
-        setError(errorMessage);
-      } else {
-        setError(t("signIn.loginFailed"));
-      }
+    onError: () => {
+      setError(t("signIn.incorrectCredentials"));
     },
   });
 
@@ -45,7 +38,7 @@ const LoginDisplay = () => {
         <DialogContent className="bg-primary-modal-background text- w-100">
           <DialogTitle className="text-3xl">{t("signIn.signIn")}</DialogTitle>
           <DialogDescription className="text-lg -my-5">{t("signIn.desc")}</DialogDescription>
-          <LoginForm loginCallback={handleLogin} isPending={isPending} />
+          <LoginForm loginCallback={handleLogin} error={error} />
         </DialogContent>
       </Dialog>
     </div>

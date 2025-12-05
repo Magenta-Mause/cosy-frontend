@@ -38,6 +38,7 @@ const translation: i18nLanguage = {
     question: "You are not signed in",
     continueMeansAccept: "By signing in, you accept our",
     legal: "Privacy Policy",
+    incorrectCredentials: "Incorrect username or password.",
   },
 };
 

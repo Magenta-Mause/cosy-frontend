@@ -35,6 +35,7 @@ export type i18nLanguage = {
     question: string;
     continueMeansAccept: string;
     legal: string;
+    incorrectCredentials: string;
   };
 };
 
