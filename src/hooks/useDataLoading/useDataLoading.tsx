@@ -51,9 +51,26 @@ const useDataLoading = () => {
   };
 
   const loadAllData = async () => {
-    await Promise.all(
-      [loadGameServers(), loadUsers(), loadInvites()].map((promise) => promise.catch(() => false)),
-    );
+    const results = await Promise.allSettled([
+      loadGameServers(),
+      loadUsers(),
+      loadInvites(),
+    ]);
+
+    const summary = {
+      gameServers: results[0].status === "fulfilled" && results[0].value === true,
+      users: results[1].status === "fulfilled" && results[1].value === true,
+      invites: results[2].status === "fulfilled" && results[2].value === true,
+    };
+
+    results.forEach((result, idx) => {
+      if (result.status === "rejected") {
+        const names = ["gameServers", "users", "invites"];
+        console.error(`Failed to load ${names[idx]}:`, result.reason);
+      }
+    });
+
+    return summary;
   };
 
   return {
