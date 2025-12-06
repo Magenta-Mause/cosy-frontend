@@ -15,10 +15,12 @@ import { Input } from "@components/ui/input.tsx";
 import { toast } from "sonner";
 import useDataInteractions from "@/hooks/useDataInteractions/useDataInteractions.tsx";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@components/ui/tooltip.tsx";
+import { useTranslation } from "react-i18next";
 
 type ViewState = "list" | "invite" | "result";
 
 const UserModalButton = (props: { className?: string }) => {
+  const { t } = useTranslation();
   const users = useTypedSelector((state) => state.userSliceReducer.data);
   const invites = useTypedSelector((state) => state.userInviteSliceReducer.data);
   const [view, setView] = useState<ViewState>("list");
@@ -45,7 +47,7 @@ const UserModalButton = (props: { className?: string }) => {
     if (generatedKey) {
       const link = `${window.location.origin}/?inviteToken=${generatedKey}`;
       navigator.clipboard.writeText(link);
-      toast.success("Invite link copied to clipboard");
+      toast.success(t("toasts.copyClipboardSuccess"));
     }
   };
 
@@ -60,7 +62,7 @@ const UserModalButton = (props: { className?: string }) => {
       <DialogTrigger asChild>
         <Button
           className={cn("h-auto p-[.5vw] aspect-square", props.className)}
-          aria-label={"Users"}
+          aria-label={t("userModal.title")}
         >
           <Users className="!h-[1.5vw] p-0 !w-auto aspect-square" />
         </Button>
@@ -68,13 +70,13 @@ const UserModalButton = (props: { className?: string }) => {
       <DialogContent className={"font-['VT323']"}>
         <DialogHeader>
           <DialogTitle className="flex items-center justify-between">
-            {view === "list" && "Users"}
-            {view === "invite" && "Invite User"}
-            {view === "result" && "Invite Created"}
+            {view === "list" && t("userModal.title")}
+            {view === "invite" && t("userModal.inviteUserTitle")}
+            {view === "result" && t("userModal.inviteCreatedTitle")}
             {view === "list" && (
               <Button size="sm" variant="outline" onClick={() => setView("invite")}>
                 <UserPlus className="w-4 h-4 mr-2" />
-                Invite
+                {t("userModal.inviteBtn")}
               </Button>
             )}
           </DialogTitle>
@@ -100,7 +102,7 @@ const UserModalButton = (props: { className?: string }) => {
             {invites.length > 0 && (
               <div className="space-y-4">
                 <h4 className="text-sm font-medium text-muted-foreground uppercase tracking-wider">
-                  Pending Invites
+                  {t("userModal.pendingInvites")}
                 </h4>
                 {invites.map((invite, index) => (
                   <Fragment key={invite.uuid}>
@@ -110,11 +112,13 @@ const UserModalButton = (props: { className?: string }) => {
                       </div>
                       <div className="flex-1 min-w-0">
                         <p className="font-semibold truncate">
-                          {invite.username || "Unclaimed Invite"}
+                          {invite.username || t("userModal.unclaimedInvite")}
                         </p>
-                        <p className="text-sm text-muted-foreground font-mono truncate">
-                          Invite Key: ••••••••
-                        </p>
+                        {invite.created_at && (
+                          <p className="text-sm text-muted-foreground font-mono truncate">
+                            {t("userModal.created", { date: new Date(invite.created_at).toLocaleString() })}
+                          </p>
+                        )}
                       </div>
                       <div className="flex items-center">
                         <Button
@@ -125,24 +129,31 @@ const UserModalButton = (props: { className?: string }) => {
                             if (invite.secret_key) {
                               const link = `${window.location.origin}/?inviteToken=${invite.secret_key}`;
                               navigator.clipboard.writeText(link);
-                              toast.success("Invite link copied to clipboard");
+                              toast.success(t("toasts.copyClipboardSuccess"));
                             }
                           }}
                         >
                           <Copy className="h-4 w-4" />
-                          <span className="sr-only">Copy invite link</span>
+                          <span className="sr-only">{t("userModal.copyLink")}</span>
                         </Button>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-8 w-8 text-muted-foreground hover:text-destructive"
-                          onClick={() =>
-                            invite.uuid && revokeInvite(invite.uuid)
-                          }
-                        >
-                          <Trash2 className="h-4 w-4" />
-                          <span className="sr-only">Revoke invite</span>
-                        </Button>
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <Button
+                                  variant="ghost"
+                                  size="icon"
+                                  className="h-8 w-8 text-muted-foreground hover:text-destructive"
+                                  onClick={() =>
+                                    invite.uuid && revokeInvite(invite.uuid)
+                                  }
+                                >
+                                  <Trash2 className="h-4 w-4" />
+                                  <span className="sr-only">{t("userModal.revokeTooltip")}</span>
+                                </Button>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                                <p>{t("userModal.revokeTooltip")}</p>
+                            </TooltipContent>
+                        </Tooltip>
                       </div>
                     </div>
                     {index < invites.length - 1 && <Separator />}
@@ -157,24 +168,24 @@ const UserModalButton = (props: { className?: string }) => {
           <div className="flex flex-col gap-4 py-4">
             <div className="space-y-2">
               <label className="text-sm font-medium" htmlFor="invite-username">
-                Username (Optional)
+                {t("userModal.usernameLabel")}
               </label>
               <Input
                 id="invite-username"
-                placeholder="Enter username..."
+                placeholder={t("userModal.usernamePlaceholder")}
                 value={inviteUsername}
                 onChange={(e) => setInviteUsername(e.target.value)}
               />
               <p className="text-xs text-muted-foreground">
-                Leave empty to allow the user to choose their own username.
+                {t("userModal.usernameDescription")}
               </p>
             </div>
             <div className="flex justify-end gap-2 mt-4">
               <Button variant="outline" size="sm" onClick={() => setView("list")}>
-                Cancel
+                {t("userModal.cancel")}
               </Button>
               <Button variant="default" size="sm" onClick={handleCreateInvite} disabled={isCreating}>
-                {isCreating ? "Creating..." : "Generate Invite"}
+                {isCreating ? t("userModal.creating") : t("userModal.generateInvite")}
               </Button>
             </div>
           </div>
@@ -203,13 +214,12 @@ const UserModalButton = (props: { className?: string }) => {
                   </button>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>Click to copy link</p>
+                  <p>{t("userModal.copyTooltip")}</p>
                 </TooltipContent>
               </Tooltip>
             </div>
             <p className="text-sm text-center text-muted-foreground">
-              Share this link with the person you want to invite.
-              They can use it to create their account.
+              {t("userModal.shareInstructions")}
             </p>
             <div className="flex flex-col gap-2 mt-2">
               <Button
@@ -219,11 +229,11 @@ const UserModalButton = (props: { className?: string }) => {
                 onClick={handleCopyLink}
               >
                 <Copy className="w-4 h-4 mr-2" />
-                Copy Invite Link
+                {t("userModal.copyLink")}
               </Button>
               <Button variant="ghost" size="sm" className="w-full" onClick={resetView}>
                 <ArrowLeft className="w-4 h-4 mr-2" />
-                Back to Users
+                {t("userModal.backToUsers")}
               </Button>
             </div>
           </div>

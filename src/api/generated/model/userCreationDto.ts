@@ -7,6 +7,8 @@
  */
 
 export interface UserCreationDto {
-  username?: string;
-  password?: string;
+  /** @minLength 1 */
+  username: string;
+  /** @minLength 1 */
+  password: string;
 }

@@ -23,7 +23,6 @@ import type {
   GameServerConfigurationEntity,
   LoginDto,
   UserCreationDto,
-  UserEntity,
   UserEntityDto,
   UserInviteCreationDto,
   UserInviteDto
@@ -168,7 +167,7 @@ export const useInvite = (
 ) => {
       
       
-      return customInstance<UserEntity>(
+      return customInstance<UserEntityDto>(
       {url: `/user-invites/use/${secretKey}`, method: 'POST',
       headers: {'Content-Type': 'application/json', },
       data: userCreationDto, signal

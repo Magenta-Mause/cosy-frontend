@@ -11,4 +11,5 @@ export interface UserInviteDto {
   username?: string;
   invited_by?: string;
   secret_key?: string;
+  created_at?: string;
 }

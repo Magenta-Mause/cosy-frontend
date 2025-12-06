@@ -108,7 +108,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserEntity"
+                  "$ref": "#/components/schemas/UserEntityDto"
                 }
               }
             }
@@ -415,45 +415,14 @@
           },
           "secret_key": {
             "type": "string"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       },
       "UserCreationDto": {
-        "type": "object",
-        "properties": {
-          "username": {
-            "type": "string"
-          },
-          "password": {
-            "type": "string"
-          }
-        }
-      },
-      "UserEntity": {
-        "type": "object",
-        "properties": {
-          "uuid": {
-            "type": "string"
-          },
-          "username": {
-            "type": "string"
-          },
-          "password": {
-            "type": "string"
-          },
-          "defaultPasswordReset": {
-            "type": "boolean"
-          },
-          "role": {
-            "type": "string",
-            "enum": [
-              "OWNER",
-              "QUOTA_USER"
-            ]
-          }
-        }
-      },
-      "LoginDto": {
         "type": "object",
         "properties": {
           "username": {
@@ -487,6 +456,23 @@
             ]
           }
         }
+      },
+      "LoginDto": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "minLength": 1
+          },
+          "password": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "password",
+          "username"
+        ]
       },
       "EnvironmentVariableConfiguration": {
         "type": "object",

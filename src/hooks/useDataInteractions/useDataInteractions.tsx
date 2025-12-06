@@ -46,10 +46,10 @@ const useDataInteractions = () => {
     mutation: {
       onSuccess: (data) => {
         dispatch(userInviteSliceActions.addInvite(data));
-        toast.success("Invite created successfully");
+        toast.success(t("toasts.inviteCreatedSuccess"));
       },
       onError: (err) => {
-        toast.error("Failed to create invite");
+        toast.error(t("toasts.inviteCreateError"));
         throw err;
       },
       onSettled: () => {
@@ -69,10 +69,10 @@ const useDataInteractions = () => {
     mutation: {
       onSuccess: (_data, variables) => {
         dispatch(userInviteSliceActions.removeInvite(variables.uuid));
-        toast.success("Invite revoked");
+        toast.success(t("toasts.inviteRevokedSuccess"));
       },
       onError: (err) => {
-        toast.error("Failed to revoke invite");
+        toast.error(t("toasts.inviteRevokeError"));
         throw err;
       },
       onSettled: () => {

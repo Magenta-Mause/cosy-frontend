@@ -9,7 +9,7 @@ const RootLayout = () => {
   return (
     <GameServerOverviewPageRightClickHandler>
       <div>
-        <HeaderButtonGroup className={"absolute z-100 top-0 right-0 mx-[2vw] my-[1vw]"}/>
+        <HeaderButtonGroup className={"absolute z-50 top-0 right-0 mx-[2vw] my-[1vw]"}/>
         <Outlet/>
       </div>
     </GameServerOverviewPageRightClickHandler>
