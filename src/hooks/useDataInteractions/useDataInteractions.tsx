@@ -53,10 +53,12 @@ const useDataInteractions = () => {
         const typedError = err as InvalidRequestError;
         const errorData = typedError.response?.data.data;
         let errorMessage = "Unknown Error";
-        if (Array.isArray(errorData)) {
+        if (Array.isArray(errorData) && errorData.length > 0) {
+          errorMessage = errorData[0];
+        } else if (errorData && typeof errorData === "object") {
           const error = Object.entries(errorData)[0];
           errorMessage = error ? error[1] : "Unknown Error";
-        } else if (errorData && typeof errorData === "string") {
+        } else if (errorData) {
           errorMessage = errorData;
         }
         toast.error(t("toasts.inviteCreateError", { error: errorMessage }));
