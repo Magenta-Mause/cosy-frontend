@@ -16,7 +16,7 @@ const userInviteSlice = createSlice({
       state.data.push(action.payload);
     },
     removeInvite: (state, action: PayloadAction<string>) => {
-      state.data = state.data.filter((user) => user.uuid !== action.payload);
+      state.data = state.data.filter((invite) => invite.uuid !== action.payload);
     },
     resetInvites: (state) => {
       state.data = [];
