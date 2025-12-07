@@ -14,6 +14,8 @@ export type i18nLanguage = {
     deleteGameServerError: string;
     refreshGameServersSuccess: string;
     refreshGameServersError: string;
+    createGameServerSuccess: string;
+    createGameServerError: string;
   };
   deleteGameServerDialog: {
     title: ContainsVariable<"serverName">;

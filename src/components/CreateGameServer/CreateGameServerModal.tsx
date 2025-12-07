@@ -2,15 +2,17 @@ import { Button } from "@components/ui/button.tsx";
 import { DialogContent, DialogFooter } from "@components/ui/dialog.tsx";
 import { createContext, useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
+import type { GameServerCreationDto } from "@/api/generated/model";
+import useDataInteractions from "@/hooks/useDataInteractions/useDataInteractions";
 import Step1 from "./CreationSteps/Step1";
 import Step2 from "./CreationSteps/Step2";
 import Step3 from "./CreationSteps/Step3";
 
 export interface GameServerCreationContext {
-  gameServerState: Partial<GameServerCreationProps>;
+  gameServerState: Partial<GameServerCreationDto>;
   setGameServerState: (
-    gameStateKey: keyof GameServerCreationProps,
-  ) => (value: GameServerCreationProps[keyof GameServerCreationProps]) => void;
+    gameStateKey: keyof GameServerCreationDto,
+  ) => (value: GameServerCreationDto[keyof GameServerCreationDto]) => void;
   setCurrentPageValid: (isValid: boolean) => void;
 }
 
@@ -20,22 +22,11 @@ export const GameServerCreationContext = createContext<GameServerCreationContext
   setCurrentPageValid: () => {},
 });
 
-export interface GameServerCreationProps {
-  gameUuid: string;
-  serverName: string;
-  template: string;
-  dockerImageName: string;
-  dockerImageTag: string;
-  port: number;
-  executionCommand: string;
-  environmentVariables?: Array<{ key: string; value: string }>;
-  volumeMounts?: Array<{ hostPath: string; containerPath: string }>;
-}
-
 const PAGES = [<Step1 key="step1" />, <Step2 key="step2" />, <Step3 key="step3" />];
 
 const CreateGameServerModal = () => {
-  const [gameServerState, setGameServerInternalState] = useState<Partial<GameServerCreationProps>>(
+  const { createGameServer } = useDataInteractions();
+  const [gameServerState, setGameServerInternalState] = useState<Partial<GameServerCreationDto>>(
     {},
   );
   const [isPageValid, setPageValid] = useState<{ [key: number]: boolean }>({});
@@ -45,7 +36,7 @@ const CreateGameServerModal = () => {
 
   const handleNextPage = () => {
     if (isLastPage) {
-      console.log("Creating game server with state:", gameServerState);
+      createGameServer(gameServerState as GameServerCreationDto);
       return;
     }
 

@@ -5,11 +5,12 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@components/ui/tooltip"
 import { CircleAlertIcon } from "lucide-react";
 import { useCallback, useContext, useEffect, useState } from "react";
 import type { ZodType } from "zod";
-import { GameServerCreationContext, type GameServerCreationProps } from "./CreateGameServerModal";
+import type { GameServerCreationDto } from "@/api/generated/model/gameServerCreationDto";
+import { GameServerCreationContext } from "./CreateGameServerModal";
 import { GameServerCreationPageContext } from "./GenericGameServerCreationPage";
 
 interface Props {
-  attribute: keyof GameServerCreationProps;
+  attribute: keyof GameServerCreationDto;
   placeHolderKeyInput: string;
   placeHolderValueInput: string;
   fieldLabel: string;

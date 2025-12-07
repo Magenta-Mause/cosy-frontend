@@ -1,13 +1,11 @@
-import {
-  GameServerCreationContext,
-  type GameServerCreationProps,
-} from "@components/CreateGameServer/CreateGameServerModal.tsx";
+import { GameServerCreationContext } from "@components/CreateGameServer/CreateGameServerModal.tsx";
 import { GameServerCreationPageContext } from "@components/CreateGameServer/GenericGameServerCreationPage.tsx";
 import { FieldError } from "@components/ui/field";
 import { Input } from "@components/ui/input.tsx";
 import { DialogDescription } from "@radix-ui/react-dialog";
 import { useCallback, useContext, useEffect } from "react";
 import type { ZodType } from "zod";
+import type { GameServerCreationDto } from "@/api/generated/model/gameServerCreationDto";
 
 export enum InputType {
   TEXT = "text",
@@ -15,7 +13,7 @@ export enum InputType {
 }
 
 const GenericGameServerCreationInputField = (props: {
-  attribute: keyof GameServerCreationProps;
+  attribute: keyof GameServerCreationDto;
   validator: ZodType;
   placeholder: string;
   errorLabel: string;

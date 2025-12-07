@@ -1,8 +1,6 @@
-import {
-  GameServerCreationContext,
-  type GameServerCreationProps,
-} from "@components/CreateGameServer/CreateGameServerModal.tsx";
+import { GameServerCreationContext } from "@components/CreateGameServer/CreateGameServerModal.tsx";
 import { createContext, type ReactNode, useCallback, useContext, useEffect, useState } from "react";
+import type { GameServerCreationDto } from "@/api/generated/model/gameServerCreationDto";
 
 export const GameServerCreationPageContext = createContext<GameServerCreationPageContextType>({
   attributesValid: {},
@@ -13,36 +11,36 @@ export const GameServerCreationPageContext = createContext<GameServerCreationPag
 
 export interface GameServerCreationPageContextType {
   attributesValid: Partial<{
-    [K in keyof GameServerCreationProps]: boolean;
+    [K in keyof GameServerCreationDto]: boolean;
   }>;
-  setAttributeValid: (attribute: keyof GameServerCreationProps, valid: boolean) => void;
+  setAttributeValid: (attribute: keyof GameServerCreationDto, valid: boolean) => void;
   attributesTouched: Partial<{
-    [K in keyof GameServerCreationProps]: boolean;
+    [K in keyof GameServerCreationDto]: boolean;
   }>;
-  setAttributeTouched: (attribute: keyof GameServerCreationProps, touched: boolean) => void;
+  setAttributeTouched: (attribute: keyof GameServerCreationDto, touched: boolean) => void;
 }
 
 const GenericGameServerCreationPage = (props: { children: ReactNode }) => {
   const { setCurrentPageValid } = useContext(GameServerCreationContext);
   const [attributesValid, setAttributesValid] = useState<
     Partial<{
-      [K in keyof GameServerCreationProps]: boolean;
+      [K in keyof GameServerCreationDto]: boolean;
     }>
   >({});
   const [attributesTouched, setAttributesTouched] = useState<
     Partial<{
-      [K in keyof GameServerCreationProps]: boolean;
+      [K in keyof GameServerCreationDto]: boolean;
     }>
   >({});
   const setAttributeValid = useCallback(
-    (attribute: keyof GameServerCreationProps, valid: boolean) => {
+    (attribute: keyof GameServerCreationDto, valid: boolean) => {
       setAttributesValid((prev) => ({ ...prev, [attribute]: valid }));
     },
     [],
   );
 
   const setAttributeTouched = useCallback(
-    (attribute: keyof GameServerCreationProps, touched: boolean) => {
+    (attribute: keyof GameServerCreationDto, touched: boolean) => {
       setAttributesTouched((prev) => ({ ...prev, [attribute]: touched }));
     },
     [],
