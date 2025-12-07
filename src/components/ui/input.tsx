@@ -11,7 +11,7 @@ function Input({ className, type, header, ...props }: InputProps) {
   return (
     <div>
       {header && (
-        <Label htmlFor={`input-header-${header}`} className="pb-2">
+        <Label htmlFor={props.id} className="pb-2">
           {header}
         </Label>
       )}
