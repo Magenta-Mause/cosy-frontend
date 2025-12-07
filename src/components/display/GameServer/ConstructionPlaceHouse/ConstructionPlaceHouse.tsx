@@ -1,3 +1,4 @@
+import CreateGameServer from "@components/CreateGameServer/CreateGameServer";
 import RightClickMenu, {
   type RightClickAction,
 } from "@components/display/configurations/RightClickMenu/RightClickMenu.tsx";
@@ -17,6 +18,7 @@ const ConstructionPlaceHouse = (props: { className?: string; style?: CSSProperti
       onClick: () => {
         toast.info(t("toasts.notImplemented"));
       },
+      render: <CreateGameServer />,
     },
   ];
 
