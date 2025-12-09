@@ -10,7 +10,6 @@ export * from './environmentVariableConfiguration';
 export * from './gameServerConfigurationEntity';
 export * from './gameServerConfigurationEntityStatus';
 export * from './loginDto';
-export * from './loginDto';
 export * from './portMapping';
 export * from './userCreationDto';
 export * from './userEntity';
