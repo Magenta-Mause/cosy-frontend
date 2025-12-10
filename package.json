@@ -9,7 +9,7 @@
     "start": "NODE_ENV=production bun src/index.ts",
     "build": "tsr generate && biome lint && bun run build.ts",
     "build:opt": "tsr generate && biome lint && bun run build.ts --minify --splitting",
-    "lint": "biome lint",
+    "lint": "biome lint && tsc",
     "lint:fix": "biome lint --write",
     "lint:fix:unsafe": "biome check --write --unsafe",
     "openapi:generate": "orval"
