@@ -33,7 +33,6 @@ const translation: i18nLanguage = {
   },
   components: {
     CreateGameServer: {
-      openButton: "Create Game Server",
       backButton: "Back",
       nextStepButton: "Next Step",
       createServerButton: "Create Server",

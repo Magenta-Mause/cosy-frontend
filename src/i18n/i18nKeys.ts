@@ -32,7 +32,6 @@ export type i18nLanguage = {
 
   components: {
     CreateGameServer: {
-      openButton: string;
       backButton: string;
       nextStepButton: string;
       createServerButton: string;

@@ -34,7 +34,6 @@ const translation: i18nLanguage = {
   consequence: "asd{{counter}}ajskod",
   components: {
     CreateGameServer: {
-      openButton: "Gameserver erstellen",
       backButton: "Zurück",
       nextStepButton: "Weiter",
       createServerButton: "Server erstellen",
