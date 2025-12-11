@@ -1,8 +1,20 @@
-import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@components/ui/dialog";
-import { type ReactNode } from "react";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@components/ui/dialog";
+
+import type { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
-import { Button } from "../button";
+
+import { Button, buttonVariants } from "../button";
+import type { VariantProps } from "class-variance-authority";
 
 type ModalButton = {
   label?: string;
@@ -17,11 +29,13 @@ const GenericModal = (props: {
   header: string;
   onOpenChange: (open: boolean) => void;
   children: ReactNode;
-  modalTrigger?: ModalButton
-  subheader?: string;
+
   open?: boolean;
+  subheader?: string;
   modalClassName?: string;
   modalContentClassName?: string;
+
+  modalTrigger?: ModalButton;
   footerButtons?: ModalButton[];
   closeButton?: ModalButton;
 }) => {
@@ -29,12 +43,13 @@ const GenericModal = (props: {
 
   return (
     <Dialog open={props.open} onOpenChange={props.onOpenChange}>
-      
       {props.modalTrigger && (
         <DialogTrigger asChild>
           <Button
             onClick={props.modalTrigger.onClick}
+            variant={props.modalTrigger.variant}
             className={props.modalTrigger.className}
+            disabled={props.modalTrigger.disable}
           >
             {props.modalTrigger.icon}
             {props.modalTrigger.label}
@@ -42,24 +57,41 @@ const GenericModal = (props: {
         </DialogTrigger>
       )}
 
-      <DialogContent className={cn("bg-[#F3AA71] font-mono", props.modalClassName)}>
+      <DialogContent
+        className={cn("bg-[#F3AA71] font-mono", props.modalClassName)}
+      >
         <DialogHeader>
-          <DialogTitle className="text-[1.5rem] text-[#6E2727]">{props.header}</DialogTitle>
-          <DialogDescription className="text-[1rem] text-[#6E2727]">{props.subheader}</DialogDescription>
+          <DialogTitle className="text-[1.5rem] text-[#6E2727]">
+            {props.header}
+          </DialogTitle>
+
+          {props.subheader && (
+            <DialogDescription className="text-[1rem] text-[#6E2727]">
+              {props.subheader}
+            </DialogDescription>
+          )}
         </DialogHeader>
 
-        <div className={cn(" bg-[#FFCDA7] border-3 border-[#6E2727] rounded-xl p-3 text-[1rem] text-[#6E2727]", props.modalContentClassName)}>
+        <div
+          className={cn(
+            "bg-[#FFCDA7] border-3 border-[#6E2727] rounded-xl p-3 text-[1rem] text-[#6E2727]",
+            props.modalContentClassName
+          )}
+        >
           {props.children}
         </div>
 
         <DialogFooter className="flex justify-between items-center">
+
           {props.closeButton && (
             <DialogClose asChild>
               <Button
                 onClick={props.closeButton.onClick}
-                variant={"default"}
+                variant={props.closeButton.variant ?? "default"}
                 className={cn(props.closeButton.className, "h-full")}
+                disabled={props.closeButton.disable}
               >
+                {props.closeButton.icon}
                 {props.closeButton.label || t("genericModal.cancel")}
               </Button>
             </DialogClose>
@@ -71,7 +103,7 @@ const GenericModal = (props: {
                 <Button
                   key={index}
                   onClick={button.onClick}
-                  variant={button.variant || "default"}
+                  variant={button.variant ?? "default"}
                   className={cn(button.className, "h-full")}
                   disabled={button.disable}
                 >
@@ -81,6 +113,7 @@ const GenericModal = (props: {
               ))}
             </div>
           )}
+
         </DialogFooter>
       </DialogContent>
     </Dialog>
