@@ -44,6 +44,10 @@ const CreateGameServerModal = ({ setOpen }: Props) => {
       createGameServer({
         ...gameServerState,
         execution_command: parseCommand(gameServerState.execution_command as unknown as string),
+        port_mappings: gameServerState.port_mappings?.map((portMapping) => ({
+          ...portMapping,
+          protocol: "TCP", // Default to TCP for now - change this later!!!
+        })),
       } as GameServerCreationDto);
       setOpen(false);
       return;
@@ -77,7 +81,7 @@ const CreateGameServerModal = ({ setOpen }: Props) => {
         <div className="flex flex-col max-h-[80vh] p-4">
           <div className="overflow-auto p-6">{PAGES[currentPage]}</div>
 
-          <DialogFooter className="flex-shrink-0 pt-4">
+          <DialogFooter className="shrink-0 pt-4">
             <Button
               variant="outline"
               onClick={() => setCurrentPage((currentPage) => currentPage - 1)}
