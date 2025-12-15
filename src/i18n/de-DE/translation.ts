@@ -69,8 +69,8 @@ const translation: i18nLanguage = {
   },
   deleteGameServerDialog: {
     title: "Sind Sie sicher?",
-    subheader: "Diese Aktion kann nicht rückgängig gemacht werden!",
-    description:
+    description: "Diese Aktion kann nicht rückgängig gemacht werden!",
+    explanation:
       "Dadurch wird Ihre Gameserver-Konfiguration dauerhaft gelöscht und die zugehörigen Daten von dem Server entfernt.",
     inputLabel: "Geben Sie den Namen des Gameservers ein, um sicherzugehen:",
     cancel: "Abbrechen",

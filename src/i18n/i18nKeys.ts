@@ -65,7 +65,7 @@ export type i18nLanguage = {
   };
   deleteGameServerDialog: {
     title: string;
-    subheader: string;
+    explanation: string;
     description: string;
     inputLabel: string;
     cancel: string;
