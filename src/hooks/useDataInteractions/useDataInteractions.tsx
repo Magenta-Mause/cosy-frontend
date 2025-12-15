@@ -94,6 +94,10 @@ const useDataInteractions = () => {
     },
   });
 
+  const revokeInvite = async (uuid: string) => {
+    await mutateRevokeInvite({ uuid });
+  };
+
   const { mutateAsync: createGameServerMutateAsync } = useCreateGameServer({
     mutation: {
       onSuccess: (data) => {
@@ -109,10 +113,6 @@ const useDataInteractions = () => {
 
   const createGameServer = async (data: CreateGameServerMutationBody) => {
     return await createGameServerMutateAsync({ data });
-  };
-
-  const revokeInvite = async (uuid: string) => {
-    await mutateRevokeInvite({ uuid });
   };
 
   return {
