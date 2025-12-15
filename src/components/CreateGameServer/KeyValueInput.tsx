@@ -73,8 +73,8 @@ export default function KeyValueInput({
 
   const preProcessKeyAndValue = useCallback(
     (key: string, value: string): [string | number, string | number] => {
-      const preProcessedKey: string | number = preProcessValue(key);
-      const preProcessedValue: string | number = preProcessValue(value);
+      const preProcessedKey = preProcessValue(key);
+      const preProcessedValue= preProcessValue(value);
 
       return [preProcessedKey, preProcessedValue];
     },
