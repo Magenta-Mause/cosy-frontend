@@ -104,23 +104,23 @@ const UserModalButton = (props: { className?: string }) => {
         </DialogMain>
         <DialogFooter>
           {view === "list" && (
-            <Button size="sm" variant="outline" onClick={() => setView("invite")}>
+            <Button size="sm" onClick={() => setView("invite")}>
               <UserPlus className="w-4 h-4 mr-2" />
               {t("userModal.inviteBtn")}
             </Button>
           )}
           {view === "invite" && (
             <>
-              <Button onClick={() => setView("list")} variant="outline">
+              <Button size="sm" onClick={() => setView("list")} variant="secondary">
                 {t("userModal.cancel")}
               </Button>
-              <Button onClick={handleCreateInvite} disabled={isCreating}>
+              <Button size="sm" onClick={handleCreateInvite} disabled={isCreating}>
                 {isCreating ? t("userModal.creating") : t("userModal.generateInvite")}
               </Button>
             </>
           )}
           {view === "result" && (
-            <Button onClick={resetView} variant="ghost">
+            <Button size="sm" onClick={resetView} variant="secondary">
               <ArrowLeft className="w-4 h-4 mr-2" />
               {t("userModal.backToUsers")}
             </Button>

@@ -105,7 +105,7 @@ export function InviteRedemptionModal({ inviteToken, onClose }: InviteRedemption
         ) : isInviteError ? (
           <div className="py-4 text-center space-y-4">
             <p className="text-destructive font-medium">{t("inviteRedemption.invalidLink")}</p>
-            <Button variant="outline" onClick={handleClose}>
+            <Button variant="secondary" onClick={handleClose}>
               {t("inviteRedemption.close")}
             </Button>
           </div>
@@ -180,7 +180,7 @@ export function InviteRedemptionModal({ inviteToken, onClose }: InviteRedemption
             <DialogFooter className="mt-6 flex gap-5">
               <Button
                 type="button"
-                variant="ghost"
+                variant="secondary"
                 onClick={handleClose}
                 disabled={isRegistering}
                 className={"h-16"}
