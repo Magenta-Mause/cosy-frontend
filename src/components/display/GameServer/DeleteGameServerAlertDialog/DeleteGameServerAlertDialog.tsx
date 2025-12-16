@@ -1,4 +1,4 @@
-import { Button, buttonVariants } from "@components/ui/button.tsx";
+import { Button } from "@components/ui/button.tsx";
 import {
   Dialog,
   DialogClose,
@@ -13,7 +13,6 @@ import { Label } from "@radix-ui/react-label";
 import type { KeyboardEvent } from "react";
 import { useState } from "react";
 import useTranslationPrefix from "@/hooks/useTranslationPrefix/useTranslationPrefix";
-import { cn } from "@/lib/utils.ts";
 
 interface DeleteGameServerAlertDialogProps {
   serverName: string;

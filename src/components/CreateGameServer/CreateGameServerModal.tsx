@@ -83,7 +83,7 @@ const CreateGameServerModal = ({ setOpen }: Props) => {
 
           <DialogFooter className="shrink-0 pt-4">
             <Button
-              variant="outline"
+              variant="primary"
               onClick={() => setCurrentPage((currentPage) => currentPage - 1)}
               disabled={currentPage === 0}
             >
