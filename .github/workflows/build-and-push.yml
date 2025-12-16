@@ -20,6 +20,8 @@ jobs:
     uses: ./.github/workflows/type-check.yml
 
   build-and-push-image:
+    if: github.event_name == 'workflow_dispatch'
+    needs: [lint, type-check]
     runs-on: ubuntu-latest
     permissions:
       contents: read
