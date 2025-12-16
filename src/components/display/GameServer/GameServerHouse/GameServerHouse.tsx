@@ -5,6 +5,7 @@ import type { CSSProperties } from "react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
+import { startService, stopService } from "@/api/generated/backend-api";
 import type { GameServerConfigurationEntity } from "@/api/generated/model";
 import serverHouseImage from "@/assets/ai-generated/main-page/house.png";
 import useDataInteractions from "@/hooks/useDataInteractions/useDataInteractions.tsx";
@@ -33,6 +34,50 @@ const GameServerHouse = (props: {
         setIsDeleteDialogOpen(true);
       },
       closeOnClick: false,
+    },
+    {
+      label: t("rightClickMenu.startServer"),
+      onClick: async () => {
+        try {
+          const res = await startService(props.gameServer.uuid as string);
+          const hostname = window.location.hostname;
+          const listeningOn = res.map((num) => (
+            <div key={num}>
+              <a
+                className="text-link"
+                href={`http://${hostname}:${num}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                - {hostname}:{num}
+              </a>
+            </div>
+          ));
+
+          toast.success(
+            <div style={{ userSelect: "text" }}>
+              <div>{t("toasts.serverStartSuccess")}</div>
+              {listeningOn}
+            </div>,
+            {
+              duration: 5000
+            }
+          );
+        } catch (e) {
+          toast.error(t("toasts.serverStartError", { error: e }));
+        }
+      },
+    },
+    {
+      label: t("rightClickMenu.stopServer"),
+      onClick: async () => {
+        try {
+          await stopService(props.gameServer.uuid as string);
+          toast.success(t("toasts.serverStopSuccess"));
+        } catch (e) {
+          toast.error(t("toasts.serverStopError", { error: e }));
+        }
+      },
     },
   ];
 
