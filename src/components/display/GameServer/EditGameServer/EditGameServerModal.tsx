@@ -1,123 +1,103 @@
-import KeyValueInput, { InputType } from "@components/CreateGameServer/KeyValueInput";
+import Step1 from "@components/CreateGameServer/CreationSteps/Step1";
+import Step2 from "@components/CreateGameServer/CreationSteps/Step2";
+import Step3 from "@components/CreateGameServer/CreationSteps/Step3";
+import { Button } from "@components/ui/button.tsx";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogMain,
-} from "@components/ui/dialog";
-import { DialogTitle } from "@radix-ui/react-dialog";
-import * as z from "zod";
+  DialogTitle,
+} from "@components/ui/dialog.tsx";
+import { Input } from "@components/ui/input.tsx";
+import { Label } from "@radix-ui/react-label";
+import type { KeyboardEvent } from "react";
+import { useState } from "react";
 import useTranslationPrefix from "@/hooks/useTranslationPrefix/useTranslationPrefix";
-import GenericGameServerCreationInputField from "../../../CreateGameServer/GenericGameServerCreationInputField";
-import GenericGameServerCreationPage from "../../../CreateGameServer/GenericGameServerCreationPage";
 
-const EditGameServerModal = (props: { open: boolean }) => {
-  const { t } = useTranslationPrefix("components.CreateGameServer.steps.step3");
+interface EditGameServerDialogProps {
+  serverName: string;
+  onConfirm: () => Promise<void>;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}
+
+export function EditGameServerModal({
+  serverName,
+  onConfirm,
+  open,
+  onOpenChange,
+}: EditGameServerDialogProps) {
+  const { t } = useTranslationPrefix("EditGameServerDialog");
+  const [inputValue, setInputValue] = useState("");
+  const [loading, setLoading] = useState(false);
+  const isConfirmButtonDisabled = inputValue !== serverName || loading;
+
+  const handleConfirm = async () => {
+    if (isConfirmButtonDisabled) return;
+
+    if (inputValue === serverName) {
+      setLoading(true);
+      try {
+        await onConfirm();
+        setInputValue(""); // Clear input after confirmation
+        onOpenChange(false); // Close dialog on success
+      } catch (_e) {
+        // Error is already handled by the hook, no need to toast here
+      } finally {
+        setLoading(false);
+      }
+    }
+  };
+
+  const handleOpenChange = (newOpen: boolean) => {
+    if (loading) return; // Prevent closing while loading
+    onOpenChange(newOpen);
+    if (!newOpen) {
+      setInputValue(""); // Clear input when dialog closes
+    }
+  };
+
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleConfirm();
+    }
+  };
 
   return (
-    <Dialog open={props.open}>
-      <DialogContent>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
+      <DialogContent className={"font-mono"}>
         <DialogHeader>
-          <DialogTitle>test</DialogTitle>
-          <DialogDescription>test</DialogDescription>
+          <DialogTitle>{t("title", { serverName })}</DialogTitle>
+          <DialogDescription>{t("description")}</DialogDescription>
         </DialogHeader>
+
         <DialogMain>
-          <GenericGameServerCreationPage>
-            <GenericGameServerCreationInputField
-              attribute="game_uuid"
-              validator={z.string().min(1)}
-              placeholder="Minecraft Server"
-              label={t("gameSelection.title")}
-              description={t("gameSelection.description")}
-              errorLabel={t("gameSelection.errorLabel")}
-            />
-
-            <GenericGameServerCreationInputField
-              attribute="server_name"
-              validator={z.string().min(1)}
-              placeholder="My Game Server"
-              label={t("serverNameSelection.title")}
-              description={t("serverNameSelection.description")}
-              errorLabel={t("serverNameSelection.errorLabel")}
-            />
-
-            <GenericGameServerCreationInputField
-              attribute="docker_image_name"
-              validator={z.string().min(1)}
-              placeholder="nginx"
-              label={t("dockerImageSelection.title")}
-              description={t("dockerImageSelection.description")}
-              errorLabel={t("dockerImageSelection.errorLabel")}
-            />
-
-            <GenericGameServerCreationInputField
-              attribute="docker_image_tag"
-              validator={z.string().min(1)}
-              placeholder="latest"
-              label={t("imageTagSelection.title")}
-              description={t("imageTagSelection.description")}
-              errorLabel={t("imageTagSelection.errorLabel")}
-            />
-
-            <KeyValueInput
-              attribute="port_mappings"
-              fieldLabel={t("portSelection.title")}
-              fieldDescription={t("portSelection.description")}
-              errorLabel={t("portSelection.errorLabel")}
-              placeHolderKeyInput="4433"
-              placeHolderValueInput="4433"
-              keyValidator={z.number().min(1).max(65535)}
-              valueValidator={z.number().min(1).max(65535)}
-              required
-              inputType={InputType.number}
-              objectKey="instance_port"
-              objectValue="container_port"
-            />
-
-            <KeyValueInput
-              attribute="environment_variables"
-              fieldLabel={t("environmentVariablesSelection.title")}
-              fieldDescription={t("environmentVariablesSelection.description")}
-              errorLabel={t("environmentVariablesSelection.errorLabel")}
-              placeHolderKeyInput="KEY"
-              placeHolderValueInput="VALUE"
-              keyValidator={z.string().min(1)}
-              valueValidator={z.string().min(1)}
-              inputType={InputType.number}
-              objectKey="key"
-              objectValue="value"
-            />
-
-            <GenericGameServerCreationInputField
-              attribute="execution_command"
-              validator={z.string().min(1)}
-              placeholder="./start.sh"
-              label={t("executionCommandSelection.title")}
-              description={t("executionCommandSelection.description")}
-              errorLabel={t("executionCommandSelection.errorLabel")}
-            />
-
-            <KeyValueInput
-              attribute="volume_mounts"
-              fieldLabel={t("hostPathSelection.title")}
-              fieldDescription={t("hostPathSelection.description")}
-              errorLabel={t("hostPathSelection.errorLabel")}
-              placeHolderKeyInput="Host Path"
-              placeHolderValueInput="Container Path"
-              keyValidator={z.string().min(1)}
-              valueValidator={z.string().min(1)}
-              inputType={InputType.text}
-              objectKey="host_path"
-              objectValue="container_path"
-            />
-          </GenericGameServerCreationPage>
+          <Step1 />
+          <Step2 />
+          <Step3 />
         </DialogMain>
-        <DialogFooter></DialogFooter>
+        <DialogFooter>
+          <DialogClose asChild>
+            <Button className="h-[50px]" variant="secondary" disabled={loading}>
+              {t("cancel")}
+            </Button>
+          </DialogClose>
+          <Button
+            type="button"
+            onClick={handleConfirm}
+            className={"h-[50px]"}
+            disabled={isConfirmButtonDisabled}
+          >
+            {t("confirm")}
+          </Button>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );
-};
-
+}
 export default EditGameServerModal;

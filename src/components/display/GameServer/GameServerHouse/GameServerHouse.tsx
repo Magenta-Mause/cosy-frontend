@@ -4,8 +4,12 @@ import Link from "@components/ui/Link.tsx";
 import type { CSSProperties } from "react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { toast } from "sonner";
-import type { GameServerConfigurationEntity } from "@/api/generated/model";
+import { parse as parseCommand } from "shell-quote";
+import type {
+  GameServerConfigurationEntity,
+  GameServerCreationDto,
+  GameServerUpdateDto,
+} from "@/api/generated/model";
 import serverHouseImage from "@/assets/ai-generated/main-page/house.png";
 import useDataInteractions from "@/hooks/useDataInteractions/useDataInteractions.tsx";
 import { cn } from "@/lib/utils.ts";
@@ -19,8 +23,12 @@ const GameServerHouse = (props: {
 }) => {
   const { t } = useTranslation();
   const { deleteGameServer } = useDataInteractions();
+  const { updateGameServer } = useDataInteractions();
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [gameServerState, setGameServerInternalState] = useState<Partial<GameServerCreationDto>>(
+    {},
+  );
 
   const actions = [
     {
@@ -38,6 +46,20 @@ const GameServerHouse = (props: {
       closeOnClick: false,
     },
   ];
+
+  const handleUpdateGameServer = async () => {
+    if (props.gameServer.uuid)
+      updateGameServer(props.gameServer.uuid, {
+        ...gameServerState,
+        execution_command: parseCommand(gameServerState.execution_command as unknown as string),
+        port_mappings: gameServerState.port_mappings?.map((portMapping) => ({
+          ...portMapping,
+          protocol: "TCP", // Default to TCP for now - change this later!!!
+        })),
+      } as GameServerUpdateDto);
+    setIsEditDialogOpen(false);
+    return;
+  };
 
   return (
     <>
@@ -74,7 +96,12 @@ const GameServerHouse = (props: {
         open={isDeleteDialogOpen}
         onOpenChange={setIsDeleteDialogOpen}
       />
-      <EditGameServerModal open={isEditDialogOpen} />
+      <EditGameServerModal
+        serverName={props.gameServer.server_name ?? ""}
+        onConfirm={handleUpdateGameServer}
+        open={isEditDialogOpen}
+        onOpenChange={setIsEditDialogOpen}
+      />
     </>
   );
 };
