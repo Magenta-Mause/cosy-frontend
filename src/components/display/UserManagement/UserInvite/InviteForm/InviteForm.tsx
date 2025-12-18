@@ -1,7 +1,13 @@
-import {Input} from "@components/ui/input.tsx";
-import {useTranslation} from "react-i18next";
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@components/ui/select.tsx";
-import {UserEntityDtoRole} from "@/api/generated/model";
+import { Input } from "@components/ui/input.tsx";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@components/ui/select.tsx";
+import { useTranslation } from "react-i18next";
+import { UserEntityDtoRole } from "@/api/generated/model";
 
 interface InviteFormProps {
   username: string;
@@ -13,8 +19,14 @@ interface InviteFormProps {
   isCreating: boolean;
 }
 
-export const InviteForm = ({username, userRole, onUsernameChange, onSubmit, onUserRoleChange}: InviteFormProps) => {
-  const {t} = useTranslation();
+export const InviteForm = ({
+  username,
+  userRole,
+  onUsernameChange,
+  onSubmit,
+  onUserRoleChange,
+}: InviteFormProps) => {
+  const { t } = useTranslation();
 
   return (
     <div className="flex flex-col gap-4 py-4">
@@ -35,12 +47,16 @@ export const InviteForm = ({username, userRole, onUsernameChange, onSubmit, onUs
         <label htmlFor="invite-username">Role</label>
         <Select defaultValue={userRole} onValueChange={onUserRoleChange}>
           <SelectTrigger id={"invite-username"}>
-            <SelectValue placeholder={"User Role"}/>
+            <SelectValue placeholder={"User Role"} />
           </SelectTrigger>
           <SelectContent>
-            {
-              Object.keys(UserEntityDtoRole).filter(role => role != UserEntityDtoRole.OWNER).map((role) => (<SelectItem value={role}>{role}</SelectItem>))
-            }
+            {Object.keys(UserEntityDtoRole)
+              .filter((role) => role !== UserEntityDtoRole.OWNER)
+              .map((role) => (
+                <SelectItem value={role} key={role}>
+                  {role}
+                </SelectItem>
+              ))}
           </SelectContent>
         </Select>
       </div>

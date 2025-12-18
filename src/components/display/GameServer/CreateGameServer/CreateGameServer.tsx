@@ -7,7 +7,10 @@ type Props = {
   setIsModalOpen: Dispatch<SetStateAction<boolean>>;
 };
 
-export default function CreateGameServer({ isModalOpen: openModal, setIsModalOpen: setOpenModal }: Props) {
+export default function CreateGameServer({
+  isModalOpen: openModal,
+  setIsModalOpen: setOpenModal,
+}: Props) {
   return (
     <Dialog open={openModal} onOpenChange={setOpenModal}>
       <CreateGameServerModal setOpen={setOpenModal} />

@@ -12,12 +12,12 @@ import { ArrowLeft, UserPlus, Users } from "lucide-react";
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
+import type { UserEntityDtoRole } from "@/api/generated/model";
 import useDataInteractions from "@/hooks/useDataInteractions/useDataInteractions.tsx";
 import { cn } from "@/lib/utils.ts";
 import { InviteForm } from "../UserInvite/InviteForm/InviteForm.tsx";
 import { InviteResult } from "../UserInvite/InviteForm/InviteResult.tsx";
 import { UserList } from "./UserList.tsx";
-import type {UserEntityDtoRole} from "@/api/generated/model";
 
 type ViewState = "list" | "invite" | "result";
 
