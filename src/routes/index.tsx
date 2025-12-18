@@ -1,5 +1,5 @@
 import GameServerDisplay from "@components/display/GameServer/GameServerDisplay/GameServerDisplay.tsx";
-import { InviteRedemptionModal } from "@components/display/InviteRedemptionModal/InviteRedemptionModal.tsx";
+import { InviteRedemptionModal } from "@components/display/UserManagement/UserInvite/InviteRedemptionModal/InviteRedemptionModal.tsx";
 import LoginDisplay from "@components/display/Login/LoginDisplay/LoginDisplay.tsx";
 import { createFileRoute } from "@tanstack/react-router";
 import bgImage from "@/assets/ai-generated/main-page/background.png";

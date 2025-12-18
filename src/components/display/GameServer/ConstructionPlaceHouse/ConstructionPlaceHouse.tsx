@@ -1,4 +1,4 @@
-import CreateGameServer from "@components/CreateGameServer/CreateGameServer";
+import CreateGameServer from "@components/display/GameServer/CreateGameServer/CreateGameServer";
 import RightClickMenu, {
   type RightClickAction,
 } from "@components/display/configurations/RightClickMenu/RightClickMenu.tsx";

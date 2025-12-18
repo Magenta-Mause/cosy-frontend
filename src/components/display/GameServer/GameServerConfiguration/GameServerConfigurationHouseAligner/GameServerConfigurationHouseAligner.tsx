@@ -1,5 +1,5 @@
-import GameServerHouse from "@components/display/GameServer/GameServerHouse/GameServerHouse";
-import calculateCoordinate from "@components/display/GameServer/GameServerHouseAligner/calculateCoordinate";
+import GameServerHouse from "@components/display/GameServer/GameServerHouse/GameServerHouse.tsx";
+import calculateCoordinate from "@components/display/GameServer/GameServerHouseAligner/calculateCoordinate.ts";
 import type { GameServerConfigurationEntity } from "@/api/generated/model";
 
 const GameServerConfigurationHouseAligner = (props: {

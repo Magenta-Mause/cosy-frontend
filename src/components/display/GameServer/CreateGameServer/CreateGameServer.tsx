@@ -1,6 +1,6 @@
-import { Dialog } from "@components/ui/dialog";
+import { Dialog } from "@components/ui/dialog.tsx";
 import type { Dispatch, SetStateAction } from "react";
-import CreateGameServerModal from "./CreateGameServerModal";
+import CreateGameServerModal from "./CreateGameServerModal.tsx";
 
 type Props = {
   isModalOpen: boolean;
