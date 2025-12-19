@@ -56,7 +56,7 @@ export default function Step3() {
         placeHolderValueInput="VALUE"
         keyValidator={z.string().min(1)}
         valueValidator={z.string().min(1)}
-        inputType={InputType.number}
+        inputType={InputType.text}
         objectKey="key"
         objectValue="value"
       />
