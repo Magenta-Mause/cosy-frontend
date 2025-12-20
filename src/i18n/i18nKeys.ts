@@ -106,6 +106,7 @@ export type i18nLanguage = {
             title: string;
             description: string;
             errorLabel: string;
+            placeholder: string;
           };
         };
         step2: {
@@ -156,6 +157,10 @@ export type i18nLanguage = {
             errorLabel: string;
           };
         };
+      };
+      autoCompleteInputField: {
+        loadingLabel: string;
+        noResultsLabel: string;
       };
     };
   };
